@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Plan - NextResume</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f6fafd;
+      color: #222;
+    }
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #3a7bd5;
+      margin-left: 2rem;
+    }
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: #222;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #3a7bd5;
+    }
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      margin-right: 2rem;
+    }
+    .btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-primary {
+      background: #3a7bd5;
+      color: #fff;
+    }
+    .btn-secondary {
+      background: #e3f0fc;
+      color: #3a7bd5;
+    }
+    .hero {
+      background: linear-gradient(120deg, #3a7bd5 0%, #7fd7e7 100%);
+      color: #fff;
+      padding: 2.5rem 0 2rem 0;
+      text-align: center;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .section {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    .pricing-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .toggle-btn {
+      background: #e3f0fc;
+      color: #3a7bd5;
+      border: none;
+      border-radius: 20px;
+      padding: 0.4rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .toggle-btn.active {
+      background: #3a7bd5;
+      color: #fff;
+    }
+    .pricing-cards {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .pricing-card {
+      background: #fff;
+      border: 2px solid #e3f0fc;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(58,123,213,0.06);
+      width: 300px;
+      padding: 2rem 1.5rem 1.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+    .pricing-card:hover {
+      border: 2px solid #3a7bd5;
+      box-shadow: 0 4px 16px rgba(58,123,213,0.12);
+    }
+    .plan-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #3a7bd5;
+    }
+    .plan-price {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #222;
+    }
+    .plan-desc {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.2rem 0;
+      width: 100%;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+      font-size: 0.98rem;
+    }
+    .plan-features li:before {
+      content: '✔';
+      color: #3a7bd5;
+      font-size: 1rem;
+    }
+    .plan-action {
+      margin-top: auto;
+      width: 100%;
+      text-align: center;
+    }
+    .plan-action .btn {
+      width: 100%;
+    }
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(58,123,213,0.06);
+    }
+    .pricing-table th, .pricing-table td {
+      padding: 1rem 0.7rem;
+      text-align: center;
+      border-bottom: 1px solid #e3f0fc;
+      font-size: 1rem;
+    }
+    .pricing-table th {
+      background: #e3f0fc;
+      color: #3a7bd5;
+      font-weight: 600;
+    }
+    .pricing-table tr:last-child td {
+      border-bottom: none;
+    }
+    .pricing-table .plan-col {
+      font-weight: bold;
+      color: #222;
+      background: #f6fafd;
+    }
+    .testimonial {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: #e3f0fc;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .testimonial img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+      border: 2px solid #3a7bd5;
+    }
+    .testimonial-content {
+      flex: 1;
+    }
+    .testimonial-content p {
+      font-size: 1.1rem;
+      color: #222;
+      margin-bottom: 0.5rem;
+    }
+    .testimonial-content .author {
+      color: #3a7bd5;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .faq-section {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(58,123,213,0.06);
+      padding: 2rem;
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+    .faq-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #3a7bd5;
+    }
+    .faq {
+      margin-bottom: 1.2rem;
+    }
+    .faq-question {
+      font-weight: 500;
+      color: #222;
+      margin-bottom: 0.2rem;
+    }
+    .faq-answer {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .contact-section {
+      text-align: center;
+      margin: 2rem 0 0 0;
+    }
+    .contact-section input[type="email"] {
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    .footer {
+      background: #222;
+      color: #fff;
+      padding: 2rem 0 1rem 0;
+      margin-top: 2rem;
+    }
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .footer-col {
+      min-width: 180px;
+      margin-bottom: 1rem;
+    }
+    .footer-col h4 {
+      color: #7fd7e7;
+      font-size: 1.1rem;
+      margin-bottom: 0.7rem;
+    }
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-col ul li {
+      margin-bottom: 0.4rem;
+    }
+    .footer-col ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.98rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover {
+      color: #7fd7e7;
+    }
+    .footer-bottom {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 900px) {
+      .pricing-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .testimonial {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">NextResume</div>
+    <nav>
+      <a href="#">Home Page</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Features</a>
+      <a href="#">Pricing</a>
+      <a href="#">My Account</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-secondary">Sign Up</button>
+      <button class="btn btn-primary">Build My Resume</button>
+    </div>
+  </header>
+  <section class="hero">
+    <h1>Choose Your Plan</h1>
+    <p>Explore our flexible pricing options designed to fit every budget. Whether you're just starting out or looking to upgrade, we have a plan for you.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary">Learn More</button>
+      <button class="btn btn-secondary">Sign Up</button>
+    </div>
+  </section>
+  <section class="section">
+    <div class="section-title">Pricing Options</div>
+    <div class="section-subtitle">Choose the plan that suits your needs best.</div>
+    <div class="pricing-toggle">
+      <button class="toggle-btn active">Monthly</button>
+      <button class="toggle-btn">Yearly</button>
+    </div>
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <div class="plan-title">Basic Plan</div>
+        <div class="plan-price">$19/mo</div>
+        <ul class="plan-features">
+          <li>Unlimited resume downloads</li>
+          <li>Customizable sections available</li>
+          <li>24/7 customer support</li>
+        </ul>
+        <div class="plan-action">
+          <button class="btn btn-primary">Get started</button>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-title">Business Plan</div>
+        <div class="plan-price">$29/mo</div>
+        <ul class="plan-features">
+          <li>All Basic features included</li>
+          <li>Advanced analytics tools</li>
+          <li>Monthly usage reports</li>
+          <li>Collaboration features</li>
+          <li>Custom branding options</li>
+        </ul>
+        <div class="plan-action">
+          <button class="btn btn-primary">Get started</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="section-title">Pricing Plans</div>
+    <div class="section-subtitle">Compare the right plan for your professional needs.</div>
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <div class="plan-title">Basic</div>
+        <div class="plan-price">$19/mo</div>
+        <div class="plan-desc">Ideal for individuals starting out.</div>
+        <div class="plan-action">
+          <button class="btn btn-primary">Get started</button>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-title">Business</div>
+        <div class="plan-price">$29/mo</div>
+        <div class="plan-desc">Perfect for growing professionals.</div>
+        <div class="plan-action">
+          <button class="btn btn-primary">Get started</button>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-title">Enterprise</div>
+        <div class="plan-price">$49/mo</div>
+        <div class="plan-desc">Best for large teams.</div>
+        <div class="plan-action">
+          <button class="btn btn-primary">Get started</button>
+        </div>
+      </div>
+    </div>
+    <table class="pricing-table">
+      <tr>
+        <th>Feature Category</th>
+        <th>Basic</th>
+        <th>Business</th>
+        <th>Enterprise</th>
+      </tr>
+      <tr>
+        <td class="plan-col">Templates Available</td>
+        <td>10</td>
+        <td>25</td>
+        <td>Unlimited</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Customization Options</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Export Formats</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">User Account Management</td>
+        <td></td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Supported Services</td>
+        <td></td>
+        <td></td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <th colspan="4">Additional Features</th>
+      </tr>
+      <tr>
+        <td class="plan-col">Mobile-Friendly Design</td>
+        <td>10</td>
+        <td>25</td>
+        <td>Unlimited</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Real-Time Collaboration</td>
+        <td></td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Analytics and Insights</td>
+        <td></td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Custom Branding Options</td>
+        <td></td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Advanced Security Features</td>
+        <td></td>
+        <td></td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <th colspan="4">Pricing Summary</th>
+      </tr>
+      <tr>
+        <td class="plan-col">Free Trial Available</td>
+        <td>10</td>
+        <td>25</td>
+        <td>Unlimited</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Monthly Subscription Options</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">No Hidden Fees</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Cancel Any Time</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td class="plan-col">Secure Payment Methods</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+    </table>
+    <div class="pricing-cards" style="margin-top: 0;">
+      <button class="btn btn-primary">Get started</button>
+      <button class="btn btn-primary">Get started</button>
+      <button class="btn btn-primary">Get started</button>
+    </div>
+  </section>
+  <section class="testimonial">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User testimonial">
+    <div class="testimonial-content">
+      <p>"The pricing plans are incredibly flexible and fit my budget perfectly! I was able to create a stunning resume without breaking the bank."</p>
+      <div class="author">- Tasha Surname, Customer from Seattle, WA</div>
+    </div>
+  </section>
+  <section class="faq-section">
+    <div class="faq-title">FAQs</div>
+    <div class="faq">
+      <div class="faq-question">What are the prices?</div>
+      <div class="faq-answer">Our pricing plans are designed to fit various needs. We offer a free trial, followed by monthly and annual subscription options. Each plan comes packed with all features, ensuring you can create a standout resume or portfolio.</div>
+    </div>
+    <div class="faq">
+      <div class="faq-question">Are there discounts available?</div>
+      <div class="faq-answer">Yes, we offer discounts for annual subscriptions and student plans. Additionally, promotional offers may be available during special events. Be sure to check our website regularly for the latest deals.</div>
+    </div>
+    <div class="faq">
+      <div class="faq-question">How is billing handled?</div>
+      <div class="faq-answer">Billing is processed securely through our platform. You will receive an invoice via email upon subscription. You can manage your billing information directly from your account settings.</div>
+    </div>
+    <div class="faq">
+      <div class="faq-question">Can I cancel anytime?</div>
+      <div class="faq-answer">Absolutely! You can cancel your subscription at anytime without penalties. Simply navigate to your account settings to initiate the cancellation process.</div>
+    </div>
+    <div class="faq">
+      <div class="faq-question">What payment methods accepted?</div>
+      <div class="faq-answer">We accept various payment methods, including credit cards and ACH/PayPal. All transactions are encrypted for your security. For more details, please visit our payment information page.</div>
+    </div>
+    <div class="faq" style="margin-top:2rem;">
+      <div class="faq-question">Still have questions?</div>
+      <div class="faq-answer">We're here to help!</div>
+      <button class="btn btn-secondary">Contact Now!</button>
+    </div>
+  </section>
+  <section class="contact-section">
+    <div class="section-title">Get Pricing Information Today</div>
+    <div>Contact our sales team to learn more about our flexible pricing plans tailored to your needs.</div>
+    <form style="margin-top:1rem;">
+      <input type="email" placeholder="Enter your email here" required>
+      <button class="btn btn-primary" type="submit">Sign Up</button>
+    </form>
+    <div style="font-size:0.9rem;color:#888;margin-top:0.5rem;">By clicking Sign Up, you confirm that you agree with our <a href="#" style="color:#3a7bd5;">Terms and Conditions</a>.</div>
+  </section>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <div class="logo" style="color:#fff;">NextResume</div>
+        <div style="margin:0.5rem 0 1rem 0;font-size:0.98rem;">Copyright © 2025 NextResume Ltd.<br>All rights reserved.</div>
+        <div>
+          <a href="#" style="color:#7fd7e7;margin-right:0.5rem;">&#9679;</a>
+          <a href="#" style="color:#7fd7e7;margin-right:0.5rem;">&#9679;</a>
+          <a href="#" style="color:#7fd7e7;">&#9679;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Testimonials</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">Terms of service</a></li>
+          <li><a href="#">Legal</a></li>
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stay up to date</h4>
+        <form>
+          <input type="email" placeholder="Your email address" style="padding:0.4rem 0.7rem;border-radius:4px;border:none;margin-bottom:0.5rem;">
+          <button class="btn btn-secondary" type="submit" style="width:100%;margin-top:0.3rem;">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">Made with ❤️ by NextResume Team</div>
+  </footer>
+</body>
+</html>
